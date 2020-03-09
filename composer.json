@@ -1,0 +1,42 @@
+{
+  "name": "jeidison/model-filtrable",
+  "description": "Filter Eloquent Models and Relationships",
+  "type": "library",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Jeidison Farias",
+      "email": "jeidison.farias@gmail.com"
+    }
+  ],
+  "keywords": [
+    "laravel",
+    "eloquent",
+    "model",
+    "search",
+    "query",
+    "filter",
+    "with",
+    "like"
+  ],
+  "minimum-stability": "dev",
+  "require": {
+    "php": "^7.2",
+    "illuminate/database": "~6.0|~7.0",
+    "laravel/helpers": "^1.0@dev"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^8.1"
+  },
+  "autoload": {
+    "psr-4": {
+      "Jeidison\\Filtrable\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Jeidison\\Filtrable\\": "src/",
+      "Tests\\": "tests/"
+    }
+  }
+}
