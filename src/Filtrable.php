@@ -85,7 +85,7 @@ trait Filtrable
         $fields = Arr::get($inputs, 'fields');
         $fields = empty($fields) ? ['*'] : array_map('trim', explode(',', $fields));
 
-        return $builder->select($fields ?? ['*']);
+        return $builder->select($fields);
     }
 
     private function addWith(Builder $builder, array $inputs): Builder
