@@ -10,7 +10,7 @@ use ReflectionException;
 
 /**
  * @author Jeidison Farias <jeidison.farias@gmail.com>
- * @method static filter($inputs);
+ * @method static filter($inputs = []);
  */
 trait Filtrable
 {
@@ -48,8 +48,8 @@ trait Filtrable
         Arr::where($inputs, function ($value, $key) use ($builder) {
             if (Str::contains($key, '->')) {
                 $relation = Arr::first(explode('->', $key));
-                $builder->whereHas($relation, function (Builder $builder) use ($key, $value) {
-                    $builder->where(Str::replaceFirst('->', '.', $key), $value);
+                $builder->whereHas($relation, function (Builder $query) use ($key, $value) {
+                    $query->where(Str::replaceFirst('->', '.', $key), $value);
                 });
             }
         });
@@ -82,8 +82,8 @@ trait Filtrable
 
     private function addField(Builder $builder, array $inputs): Builder
     {
-        $fields = Arr::get($inputs, 'fields',  ['*']);
-        $fields = empty($fields) ? [] : array_map('trim', explode(',', $fields));
+        $fields = Arr::get($inputs, 'fields');
+        $fields = empty($fields) ? ['*'] : array_map('trim', explode(',', $fields));
 
         return $builder->select($fields ?? ['*']);
     }
