@@ -43,13 +43,25 @@ trait Filtrable
         return $this->addOrderBy($query, $inputs);
     }
 
+    //TODO: Melhorar, e deixar recursivo
     private function addFilterRelationship(Builder $builder, array $inputs)
     {
         Arr::where($inputs, function ($value, $key) use ($builder) {
             if (Str::contains($key, '->')) {
-                $relation = Arr::first(explode('->', $key));
-                $builder->whereHas($relation, function (Builder $query) use ($key, $value) {
-                    $query->where(Str::replaceFirst('->', '.', $key), $value);
+                $keyExploded = explode('->', $key);
+                $relation = Arr::first($keyExploded);
+                $builder->whereHas($relation, function (Builder $query) use ($key, $value, $keyExploded) {
+                    if (count($keyExploded) > 2) {
+
+                        $relation = explode('->', Arr::get(explode('->', $key, 2), 1));
+                        $query->whereHas(Arr::first($relation), function (Builder $query2) use ($value, $key) {
+                            $collum = Arr::get(explode('->', $key, 2), 1);
+                            $query2->where(Str::replaceFirst('->', '.', $collum), $value);
+                        });
+
+                    } else {
+                        $query->where(Str::replaceFirst('->', '.', $key), $value);
+                    }
                 });
             }
         });
