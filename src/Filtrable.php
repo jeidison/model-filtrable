@@ -85,8 +85,8 @@ trait Filtrable
             }
 
             $keyExploded = explode(':', $key);
-            $column        = Arr::first($keyExploded);
-            $column        = Arr::only([$column => $value], $builder->getModel()::columnsFiltrable());
+            $column      = Arr::first($keyExploded);
+            $column      = Arr::only([$column => $value], $builder->getModel()::columnsFiltrable());
             if (!empty($column)) {
                 $operator = Arr::get($keyExploded, 1);
                 $builder->where(key($column), $operator, $value);
