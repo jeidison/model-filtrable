@@ -80,16 +80,25 @@ trait Filtrable
     private function addOperator(Builder $builder, array $inputs): Builder
     {
         Arr::where($inputs, function ($value, $key) use ($builder) {
-            if (!Str::contains($key, ':')) {
+            if (!Str::contains($key, ':'))
                 return;
-            }
 
             $keyExploded = explode(':', $key);
             $column      = Arr::first($keyExploded);
             $column      = Arr::only([$column => $value], $builder->getModel()::columnsFiltrable());
-            if (!empty($column)) {
-                $operator = Arr::get($keyExploded, 1);
-                $builder->where(key($column), $operator, $value);
+            if (empty($column))
+                return;
+
+            $column   = key($column);
+            $operator = Arr::get($keyExploded, 1);
+            if ($operator == 'in') {
+                $values = array_map('trim', explode(',', $value));
+                $builder->whereIn($column, $values);
+            } elseif ($operator == 'notIn') {
+                $values = array_map('trim', explode(',', $value));
+                $builder->whereNotIn($column, $values);
+            } else {
+                $builder->where($column, $operator, $value);
             }
         });
 
@@ -106,7 +115,7 @@ trait Filtrable
 
     private function addWith(Builder $builder, array $inputs): Builder
     {
-        $with = Arr::get($inputs, 'with', []);
+        $with = Arr::get($inputs, 'with');
         $with = empty($with) ? [] : array_map('trim', explode(',', $with));
 
         return $builder->with($with);
