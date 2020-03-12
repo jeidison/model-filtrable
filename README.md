@@ -57,61 +57,65 @@ class ProfessionalService implements IProfessionalService
 
 ### Filtering:
 
+Where
 ```
     /api/professionals?id_prof=1
 ```
-or
+
+WhereIn
 ```
     /api/professionals?id_prof:in=1,2
 ```
-or
+
+WhereNotIn
 ```
     /api/professionals?id_prof:notIn=1,2
 ```
-or
+
+WhereBetween
 ```
     /api/professionals?id_prof:between=1,2
     /api/professionals?updated_at:between=2020-03-10 14:00:27,2020-03-10 14:00:27
 ```
-or
+
+WhereNotBetween
 ```
     /api/professionals?id_prof:notBetween=1,2
     /api/professionals?updated_at:notBetween=2020-03-10 14:00:27,2020-03-10 14:00:27
 ```
-or
+
+WhereNull
 ```
     /api/professionals?id_prof:null=
 ```
-or
+
+WhereNotNull
 ```
     /api/professionals?id_prof:notNull=
 ```
-or
+
+Where Like
 ```
     /api/professionals?prof_name:like=Jeidison%
 ```
 
 With:
-
 ```
     /api/professionals?with=places,specialties
 ```
 
 Relationship:
-
 ```
     /api/places->id_place=1
     /api/places->professionals->id_place=1
 ```
 
 Order By:
-
 ```
     /api/professionals?order=id_place
 ```
 
 Fields Response:
-
 ```
     /api/professionals?fields=id_place,prof_name,prof_phone,prof_email
 ```
