@@ -53,16 +53,40 @@ class ProfessionalService implements IProfessionalService
 }
 ```
 
-###Querying at the API-endpoint
+## Querying at the API-endpoint
 
-Filtering:
+### Filtering:
 
 ```
     /api/professionals?id_prof=1
 ```
-
-Like:
-
+or
+```
+    /api/professionals?id_prof:in=1,2
+```
+or
+```
+    /api/professionals?id_prof:notIn=1,2
+```
+or
+```
+    /api/professionals?id_prof:between=1,2
+    /api/professionals?updated_at:between=2020-03-10 14:00:27,2020-03-10 14:00:27
+```
+or
+```
+    /api/professionals?id_prof:notBetween=1,2
+    /api/professionals?updated_at:notBetween=2020-03-10 14:00:27,2020-03-10 14:00:27
+```
+or
+```
+    /api/professionals?id_prof:null=
+```
+or
+```
+    /api/professionals?id_prof:notNull=
+```
+or
 ```
     /api/professionals?prof_name:like=Jeidison%
 ```
@@ -76,8 +100,8 @@ With:
 Relationship:
 
 ```
-    /api/professionals?specialties->id_spec=1
-    /api/professionals?places->id_place=1
+    /api/places->id_place=1
+    /api/places->professionals->id_place=1
 ```
 
 Order By:
