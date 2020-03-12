@@ -18,7 +18,11 @@ use Jeidison\Filtrable\Filtrable;
 class Professional extends Model
 {
     use Filtrable;
-    
+
+    ...
+    protected $fillable = [
+        //All fields filtrable;
+    ];
     ...
 
     public function places()
