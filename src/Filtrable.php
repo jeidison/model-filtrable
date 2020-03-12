@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
+use Jeidison\Filtrable\Operator\Factory;
 use ReflectionClass;
 use ReflectionException;
 
@@ -56,8 +57,9 @@ trait Filtrable
 
                         $relation = explode('->', Arr::get(explode('->', $key, 2), 1));
                         $query->whereHas(Arr::first($relation), function (Builder $query2) use ($value, $key) {
-                            $collum = Arr::get(explode('->', $key, 2), 1);
-                            $query2->where(Str::replaceFirst('->', '.', $collum), $value);
+                            $column = Arr::get(explode('->', $key, 2), 1);
+
+                            $query2->where(Str::replaceFirst('->', '.', $column), $value);
                         });
 
                     } else {
@@ -90,41 +92,9 @@ trait Filtrable
             if (empty($column))
                 return;
 
-            $column   = key($column);
-            $operator = Arr::get($keyExploded, 1);
-            if ($operator == 'in') {
-                $values = array_map('trim', explode(',', $value));
-                $builder->whereIn($column, $values);
-            } elseif ($operator == 'notIn') {
-                $values = array_map('trim', explode(',', $value));
-                $builder->whereNotIn($column, $values);
-            } elseif ($operator == 'between') {
-                $values = array_map(function ($value) {
-                    if (strtotime($value)) {
-                        return Carbon::createFromTimestamp(strtotime($value));
-                    }
-                    return $value;
-                }, explode(',', $value));
-
-                $values = array_map('trim', explode(',', $value));
-                $builder->whereBetween($column, $values);
-            } elseif ($operator == 'notBetween') {
-                $values = array_map(function ($value) {
-                    if (strtotime($value)) {
-                        return Carbon::createFromTimestamp(strtotime($value));
-                    }
-                    return $value;
-                }, explode(',', $value));
-
-                $values = array_map('trim', explode(',', $value));
-                $builder->whereNotBetween($column, $values);
-            } elseif ($operator == 'null') {
-                $builder->whereNull($column);
-            } elseif ($operator == 'notNull') {
-                $builder->whereNotNull($column);
-            } else {
-                $builder->where($column, $operator, $value);
-            }
+            $operator  = Arr::get($keyExploded, 1);
+            $operation = Factory::getOperator($operator);
+            $operation->add($builder, $operator, key($column), $value);
         });
 
         return $builder;
