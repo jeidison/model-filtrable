@@ -118,6 +118,10 @@ trait Filtrable
 
                 $values = array_map('trim', explode(',', $value));
                 $builder->whereNotBetween($column, $values);
+            } elseif ($operator == 'null') {
+                $builder->whereNull($column);
+            } elseif ($operator == 'notNull') {
+                $builder->whereNotNull($column);
             } else {
                 $builder->where($column, $operator, $value);
             }
