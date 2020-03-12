@@ -4,6 +4,7 @@ namespace Jeidison\Filtrable;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Str;
 use ReflectionClass;
 use ReflectionException;
@@ -97,6 +98,26 @@ trait Filtrable
             } elseif ($operator == 'notIn') {
                 $values = array_map('trim', explode(',', $value));
                 $builder->whereNotIn($column, $values);
+            } elseif ($operator == 'between') {
+                $values = array_map(function ($value) {
+                    if (strtotime($value)) {
+                        return Carbon::createFromTimestamp(strtotime($value));
+                    }
+                    return $value;
+                }, explode(',', $value));
+
+                $values = array_map('trim', explode(',', $value));
+                $builder->whereBetween($column, $values);
+            } elseif ($operator == 'notBetween') {
+                $values = array_map(function ($value) {
+                    if (strtotime($value)) {
+                        return Carbon::createFromTimestamp(strtotime($value));
+                    }
+                    return $value;
+                }, explode(',', $value));
+
+                $values = array_map('trim', explode(',', $value));
+                $builder->whereNotBetween($column, $values);
             } else {
                 $builder->where($column, $operator, $value);
             }
