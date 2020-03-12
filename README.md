@@ -123,3 +123,6 @@ Fields Response:
 ```
     /api/professionals?fields=id_place,prof_name,prof_phone,prof_email
 ```
+
+## Credits
+- [Jeidison Farias](https://github.com/jeidison)
