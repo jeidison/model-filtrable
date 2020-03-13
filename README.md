@@ -48,8 +48,6 @@ class ProfessionalService implements IProfessionalService
 {
     public function filter()
     {
-         return Professional::filter()->get();
-         // or
          return Professional::filter(request()->all())->get(); 
         // or
          return Professional::filter(['field_one' => 'value1'])->get();     
