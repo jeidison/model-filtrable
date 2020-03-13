@@ -5,14 +5,13 @@ namespace Jeidison\Filtrable\Operation;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Arr;
 
-class OperationWith implements Operation
+class OperationOrderBy implements Operation
 {
 
     public function addOperation(Builder $builder, array $inputs): Builder
     {
-        $with = Arr::get($inputs, 'with');
-        $with = empty($with) ? [] : array_map('trim', explode(',', $with));
+        $order = Arr::get($inputs, 'order');
 
-        return $builder->with($with);
+        return $builder->orderBy($order ?? $builder->getModel()->getKeyName());
     }
 }

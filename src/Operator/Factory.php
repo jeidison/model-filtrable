@@ -2,6 +2,7 @@
 
 namespace Jeidison\Filtrable\Operator;
 
+use Exception;
 use ReflectionClass;
 
 class Factory
@@ -17,8 +18,9 @@ class Factory
     public static function getOperator($type = ''): Operator
     {
         $operator = self::getValue($type) ?? self::getValue('equals');
-
-        return new $operator();
+        $instance = new $operator();
+        throw_if(!is_subclass_of($instance, Operator::class), new Exception(get_class($instance) . "Class should implements interface ". Operator::class));
+        return $instance;
     }
 
     private static function getConstants(): array

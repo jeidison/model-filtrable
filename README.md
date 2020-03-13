@@ -124,5 +124,15 @@ Fields Response:
     /api/professionals?fields=id_place,prof_name,prof_phone,prof_email
 ```
 
+Paginate:
+```
+    /api/professionals?paginate
+    or
+    /api/professionals?paginate&paginate:page=0
+    or
+    /api/professionals?paginate&paginate:perPage=10&paginate:page=0
+    ...
+```
+
 ## Credits
 - [Jeidison Farias](https://github.com/jeidison)
