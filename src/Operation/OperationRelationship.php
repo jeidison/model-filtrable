@@ -22,6 +22,7 @@ class OperationRelationship implements Operation
             $relation = implode('.', $keys);
             $builder->whereHas($relation, function ($q) use ($column, $value) {
                 $operation = Factory::getOperation('filter');
+                $column    = $q->getModel()->getTable() . '.' . $column;
                 return $operation->addOperation($q, [$column => $value]);
             });
         });
