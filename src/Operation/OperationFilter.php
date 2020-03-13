@@ -14,7 +14,11 @@ class OperationFilter implements Operation
     {
         Arr::where($inputs, function ($value, $key) use ($builder, $inputs) {
             if (!Str::contains($key, ':')) {
-                $filter  = Arr::only($inputs, $builder->getModel()::columnsFiltrable());
+                if (Str::contains($key, '.')) {
+                    $filter = [$key => $value];
+                } else {
+                    $filter  = Arr::only($inputs, $builder->getModel()::columnsFiltrable());
+                }
                 $builder->where($filter);
                 return;
             }
