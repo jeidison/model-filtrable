@@ -33,7 +33,6 @@ trait Filtrable
      */
     public function scopeFilter(Builder $builder, array $inputs = [])
     {
-        $inputs     = (!empty($inputs) ? $inputs : request()->all());
         $operations = Factory::createOperations();
         foreach ($operations as $operation) {
             $builder = $operation->addOperation($builder, $inputs);
