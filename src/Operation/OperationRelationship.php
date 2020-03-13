@@ -18,10 +18,11 @@ class OperationRelationship implements Operation
 
             $keys   = explode('->', $key);
             $column = Arr::last($keys);
-            Arr::forget($keys, count($keys)-1);
+            Arr::forget($keys, count($keys) - 1);
             $relation = implode('.', $keys);
-            $builder->whereHas($relation, function ($q) use ($column, $value){
-                $q->where($column, $value);
+            $builder->whereHas($relation, function ($q) use ($column, $value) {
+                $operation = Factory::getOperation('filter');
+                return $operation->addOperation($q, [$column => $value]);
             });
         });
 

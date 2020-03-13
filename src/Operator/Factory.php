@@ -15,9 +15,17 @@ class Factory
     const notNull    = OperatorIsNotNull::class;
     const equals     = OperatorEquals::class;
 
-    public static function getOperator($type = ''): Operator
+    public static function getOperator($type = '')
     {
-        $operator = self::getValue($type) ?? self::getValue('equals');
+        if (empty($type)) {
+            $operator = self::getValue('equals');
+            return new $operator();
+        }
+
+        $operator = self::getValue($type);
+        if (empty($operator))
+            return null;
+
         $instance = new $operator();
         throw_if(!is_subclass_of($instance, Operator::class), new Exception(get_class($instance) . "Class should implements interface ". Operator::class));
         return $instance;

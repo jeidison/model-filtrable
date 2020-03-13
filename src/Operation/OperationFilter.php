@@ -15,7 +15,8 @@ class OperationFilter implements Operation
         Arr::where($inputs, function ($value, $key) use ($builder, $inputs) {
             if (!Str::contains($key, ':')) {
                 $filter  = Arr::only($inputs, $builder->getModel()::columnsFiltrable());
-                return $builder->where($filter);
+                $builder->where($filter);
+                return;
             }
 
             $keyExploded = explode(':', $key);
@@ -26,7 +27,11 @@ class OperationFilter implements Operation
 
             $operator  = Arr::get($keyExploded, 1);
             $operation = Factory::getOperator($operator);
-            $operation->add($builder, $operator, key($column), $value);
+            if (!empty($operation)) {
+                $operation->add($builder, $operator, key($column), $value);
+            } else {
+                $builder->where(key($column), $operator, $value);
+            }
         });
 
         return $builder;
