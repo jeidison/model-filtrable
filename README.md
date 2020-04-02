@@ -62,6 +62,17 @@ class ProfessionalService implements IProfessionalService
 Where
 ```
     /api/professionals?id_prof=1
+    or
+    /api/professionals?id_prof:==1
+    or
+    /api/professionals?id_prof:<>=1
+    or
+    /api/professionals?id_prof:!==1
+    or
+    /api/professionals?id_prof:>=1
+    or
+    /api/professionals?id_prof:<=1
+    ...
 ```
 
 WhereIn
