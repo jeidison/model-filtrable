@@ -20,11 +20,19 @@ trait Filtrable
      */
     public static function columns()
     {
-        $class = new ReflectionClass(self::class);
+        $self     = new self();
+        $class    = new ReflectionClass(self::class);
         $property = $class->getProperty('fillable');
         $property->setAccessible(true);
 
-        return $property->getValue(new self());
+        $propertPrimaryKey = $class->getProperty('primaryKey');
+        $propertPrimaryKey->setAccessible(true);
+
+        $fillable   = $property->getValue($self);
+        $primaryKey = $propertPrimaryKey->getValue($self);
+
+        array_push($fillable, $primaryKey);
+        return $fillable;
     }
 
     /**
