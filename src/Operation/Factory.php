@@ -13,6 +13,7 @@ class Factory
     const orderBy      = OperationOrderBy::class;
     const relationship = OperationRelationship::class;
     const paginate     = OperationPaginate::class;
+    const has          = OperationHas::class;
 
     public static function createOperations(): array
     {
