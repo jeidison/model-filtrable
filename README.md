@@ -117,6 +117,11 @@ With:
     /api/professionals?with=places,specialties
 ```
 
+Has:
+```
+    /api/professionals?has=places
+```
+
 Relationship:
 ```
     /api/places->id_place=1
