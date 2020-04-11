@@ -14,10 +14,6 @@ class OperationHas implements Operation
         if (empty($has))
             return $builder;
 
-        $model = $builder->getModel();
-        if (!method_exists($model, $has))
-            return $builder;
-
         return $builder->has($has);
     }
 }
