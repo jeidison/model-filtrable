@@ -9,7 +9,7 @@ use ReflectionException;
 
 /**
  * @author Jeidison Farias <jeidison.farias@gmail.com>
- * @method static filter($inputs = []);
+ * @method static Builder filter($inputs = []);
  */
 trait Filtrable
 {
