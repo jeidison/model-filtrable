@@ -112,6 +112,11 @@ Where Like
     /api/professionals?prof_name:like=Jeidison%
 ```
 
+Where Date
+```
+    /api/professionals?created_at:whereDate=2020-03-10
+```
+
 With:
 ```
     /api/professionals?with=places,specialties
