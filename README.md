@@ -136,6 +136,14 @@ Relationship:
 Order By:
 ```
     /api/professionals?order=id_place
+    or 
+    /api/professionals?order=id_prof:desc
+    or 
+    /api/professionals?order=id_prof:asc
+    or 
+    /api/professionals?order=id_place,id_prof:desc
+    or 
+    /api/professionals?order=id_place:asc,id_prof:desc
 ```
 
 Fields Response:
