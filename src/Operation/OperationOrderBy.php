@@ -10,14 +10,15 @@ class OperationOrderBy implements Operation
 
     public function addOperation(Builder $builder, array $inputs): Builder
     {
+        $table    = $builder->getModel()->getTable();
         $orderStr = Arr::get($inputs, 'order');
         if (!$orderStr)
-            return $builder->orderBy($builder->getModel()->getKeyName());
+            return $builder->orderBy( "$table." . $builder->getModel()->getKeyName());
 
         $orderList = explode(',', $orderStr);
         foreach ($orderList as $orderField) {
             $order     = explode(':', $orderField);
-            $field     = Arr::first($order);
+            $field     = "$table." . Arr::first($order);
             $direction = (count($order) > 1) ? Arr::last($order) : 'asc';
             $builder->orderBy($field, $direction);
         }

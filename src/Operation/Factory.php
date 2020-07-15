@@ -15,11 +15,15 @@ class Factory
     const paginate     = OperationPaginate::class;
     const has          = OperationHas::class;
 
+    /**
+     * @return Operation[]
+     */
     public static function createOperations(): array
     {
         return array_values(array_map(function ($operation) {
             $instance = new $operation;
             throw_if(!is_subclass_of($instance, Operation::class), new Exception(get_class($instance) . "Class should implements interface " . Operation::class));
+
             return new $instance;
         }, self::getConstants()));
     }

@@ -16,7 +16,7 @@ class Factory
     const equals     = OperatorEquals::class;
     const whereDate  = OperatorWhereDate::class;
 
-    public static function getOperator($type = '')
+    public static function getOperator($type = ''): ?Operator
     {
         if (empty($type)) {
             $operator = self::getValue('equals');
@@ -29,6 +29,7 @@ class Factory
 
         $instance = new $operator();
         throw_if(!is_subclass_of($instance, Operator::class), new Exception(get_class($instance) . "Class should implements interface ". Operator::class));
+
         return $instance;
     }
 
