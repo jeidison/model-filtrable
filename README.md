@@ -131,6 +131,9 @@ Relationship:
 ```
     /api/places->id_place=1
     /api/places->professionals->id_place=1
+    /api/places->professionals->id_place:<>=1
+    /api/places->professionals->id_place:<=1
+    ...
 ```
 
 Order By:

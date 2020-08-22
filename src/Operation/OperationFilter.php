@@ -17,7 +17,7 @@ class OperationFilter implements Operation
                 if (Str::contains($key, '.')) {
                     $filter = [$key => $value];
                 } else {
-                    $filter  = Arr::only($inputs, $builder->getModel()::columnsFiltrable());
+                    $filter = Arr::only($inputs, $builder->getModel()::columnsFiltrable());
                 }
                 $builder->where($filter);
                 return;
@@ -25,7 +25,13 @@ class OperationFilter implements Operation
 
             $keyExploded = explode(':', $key);
             $column      = Arr::first($keyExploded);
-            $column      = Arr::only([$column => $value], $builder->getModel()::columnsFiltrable());
+
+            if (Str::contains($column, '->')) {
+                $columnExploded = explode('->', $column);
+                $column         = Arr::last($columnExploded);
+            }
+
+            $column = Arr::only([$column => $value], $builder->getModel()::columnsFiltrable());
             if (empty($column))
                 return;
 
