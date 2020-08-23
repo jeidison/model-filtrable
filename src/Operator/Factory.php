@@ -15,6 +15,7 @@ class Factory
     const notNull    = OperatorIsNotNull::class;
     const equals     = OperatorEquals::class;
     const whereDate  = OperatorWhereDate::class;
+    const orWhere    = OperatorWhereDate::class;
 
     public static function getOperator($type = ''): ?Operator
     {

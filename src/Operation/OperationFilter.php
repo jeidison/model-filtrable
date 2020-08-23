@@ -35,8 +35,8 @@ class OperationFilter implements Operation
             if (empty($column))
                 return;
 
-            $operator  = Arr::get($keyExploded, 1);
-            $operation = Factory::getOperator($operator);
+            $operator  = Arr::last($keyExploded);
+            $operation = Factory::getOperator(Arr::get($keyExploded, 1));
             if (!empty($operation)) {
                 $operation->add($builder, $operator, key($column), $value);
             } else {

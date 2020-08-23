@@ -117,6 +117,11 @@ Where Date
     /api/professionals?created_at:whereDate=2020-03-10
 ```
 
+orWhere
+```
+    /api/professionals?id_prof:>=100&prof_name:orWhere=Jeidison
+```
+
 With:
 ```
     /api/professionals?with=places,specialties
